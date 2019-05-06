@@ -1,0 +1,1 @@
+parallel "python ../../scripts/trim-terminal-stops.py {}" ::: *.fasta
