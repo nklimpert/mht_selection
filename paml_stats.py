@@ -39,6 +39,12 @@ class TestResults:
                        {'Proportions': l[0::2], 'Omegas': l[1::2]},
                        'bsC': lambda l:
                        {'Proportions': l[0::3], 'Background_omegas': l[1::3],
+                        'Foreground_omegas': l[2::3]},
+                        'bsA1': lambda l:
+                       {'Proportions': l[0::3], 'Background_omegas': l[1::3],
+                        'Foreground_omegas': l[2::3]},
+                        'bsA': lambda l:
+                       {'Proportions': l[0::3], 'Background_omegas': l[1::3],
                         'Foreground_omegas': l[2::3]}
                        }
         # this is where the omegas are stored

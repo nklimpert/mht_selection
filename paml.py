@@ -148,10 +148,10 @@ for model in test:
                 initial_omega = 1.0
             model_specifications = model + '.' + branch_estimation + '_' + \
                                    str(initial_omega) + 'w'
-            print 'Testing model ' + model + ' on ' + alignment_name + \
+            print('Testing model ' + model + ' on ' + alignment_name + \
                   ' using starting branch length option ' + \
                   branch_estimation + ' and initial omega: ' + \
-                  str(initial_omega) + 'w'
+                  str(initial_omega) + 'w')
             if model == 'XX':
                 tree.run_model(model_specifications, \
                             fix_blength=starting_branch_length_option, \
@@ -168,11 +168,11 @@ for model in test:
                             fix_blength=starting_branch_length_option, \
                             omega=initial_omega)
             current_model = tree.get_evol_model(model_specifications)
-            print 'The fitting of model ' + model + ' on ' + alignment_name + \
+            print('The fitting of model ' + model + ' on ' + alignment_name + \
                   ' using starting branch length option ' + \
                   branch_estimation + ' and initial omega: ' + \
                   str(initial_omega) + 'w, the likelihood was: ' + \
-                  str(current_model.lnL)
+                  str(current_model.lnL))
             if current_model.lnL > best_lnL[model]:
                 best_lnL[model] = current_model.lnL
                 best_model[model] = current_model
@@ -272,6 +272,52 @@ for model in test:
         proportions = classes.get('proportions')
         background_omegas = classes.get('branch type 0')
         foreground_omegas = classes.get('branch type 1')
+        proportion_0 = proportions[0]
+        bg_omega_0 = background_omegas[0]
+        fg_omega_0 = foreground_omegas[0]
+        proportion_1 = proportions[1]
+        bg_omega_1 = background_omegas[1]
+        fg_omega_1 = foreground_omegas[1]
+        proportion_2 = proportions[2]
+        bg_omega_2 = background_omegas[2]
+        fg_omega_2 = foreground_omegas[2]
+        results = clade_name + ',' + gene_name + ',' + model_name + ',' + \
+                  str(lnL) + ',' + str(proportion_0) + ',' + str(bg_omega_0) +\
+                  ',' + str(fg_omega_0) + ',' + str(proportion_1) + ',' + \
+                  str(bg_omega_1) + ',' + str(fg_omega_1) + ',' + \
+                  str(proportion_2) + ',' + str(bg_omega_2) + ',' + \
+                  str(fg_omega_2) + '\n' 
+        out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
+        with open(out_filename, 'w') as out_results:
+            out_results.write(results)
+    if model == 'bsA':
+        classes = current_model.classes
+        proportions = classes.get('proportions')
+        background_omegas = classes.get('background w')
+        foreground_omegas = classes.get('foreground w')
+        proportion_0 = proportions[0]
+        bg_omega_0 = background_omegas[0]
+        fg_omega_0 = foreground_omegas[0]
+        proportion_1 = proportions[1]
+        bg_omega_1 = background_omegas[1]
+        fg_omega_1 = foreground_omegas[1]
+        proportion_2 = proportions[2]
+        bg_omega_2 = background_omegas[2]
+        fg_omega_2 = foreground_omegas[2]
+        results = clade_name + ',' + gene_name + ',' + model_name + ',' + \
+                  str(lnL) + ',' + str(proportion_0) + ',' + str(bg_omega_0) +\
+                  ',' + str(fg_omega_0) + ',' + str(proportion_1) + ',' + \
+                  str(bg_omega_1) + ',' + str(fg_omega_1) + ',' + \
+                  str(proportion_2) + ',' + str(bg_omega_2) + ',' + \
+                  str(fg_omega_2) + '\n' 
+        out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
+        with open(out_filename, 'w') as out_results:
+            out_results.write(results)
+    if model == 'bsA1':
+        classes = current_model.classes
+        proportions = classes.get('proportions')
+        background_omegas = classes.get('background w')
+        foreground_omegas = classes.get('foreground w')
         proportion_0 = proportions[0]
         bg_omega_0 = background_omegas[0]
         fg_omega_0 = foreground_omegas[0]
