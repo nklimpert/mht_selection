@@ -302,14 +302,18 @@ for model in test:
         bg_omega_1 = background_omegas[1]
         fg_omega_1 = foreground_omegas[1]
         proportion_2 = proportions[2]
-        bg_omega_2 = background_omegas[2]
-        fg_omega_2 = foreground_omegas[2]
+        bg_omega_2a = background_omegas[2]
+        fg_omega_2a = foreground_omegas[2]
+        bg_omega_2b = background_omegas[3]
+        fg_omega_2b = foreground_omegas[3]
+
         results = clade_name + ',' + gene_name + ',' + model_name + ',' + \
                   str(lnL) + ',' + str(proportion_0) + ',' + str(bg_omega_0) +\
                   ',' + str(fg_omega_0) + ',' + str(proportion_1) + ',' + \
                   str(bg_omega_1) + ',' + str(fg_omega_1) + ',' + \
-                  str(proportion_2) + ',' + str(bg_omega_2) + ',' + \
-                  str(fg_omega_2) + '\n' 
+                  str(proportion_2) + ',' + str(bg_omega_2a) + ',' + \
+                  str(fg_omega_2a) + str(bg_omega_2b) + ',' + \
+                  str(fg_omega_2b) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
             out_results.write(results)
@@ -325,14 +329,18 @@ for model in test:
         bg_omega_1 = background_omegas[1]
         fg_omega_1 = foreground_omegas[1]
         proportion_2 = proportions[2]
-        bg_omega_2 = background_omegas[2]
-        fg_omega_2 = foreground_omegas[2]
+        bg_omega_2a = background_omegas[2]
+        fg_omega_2a = foreground_omegas[2]
+        bg_omega_2b = background_omegas[3]
+        fg_omega_2b = foreground_omegas[3]
+
         results = clade_name + ',' + gene_name + ',' + model_name + ',' + \
                   str(lnL) + ',' + str(proportion_0) + ',' + str(bg_omega_0) +\
                   ',' + str(fg_omega_0) + ',' + str(proportion_1) + ',' + \
                   str(bg_omega_1) + ',' + str(fg_omega_1) + ',' + \
-                  str(proportion_2) + ',' + str(bg_omega_2) + ',' + \
-                  str(fg_omega_2) + '\n' 
+                  str(proportion_2) + ',' + str(bg_omega_2a) + ',' + \
+                  str(fg_omega_2a) + str(bg_omega_2b) + ',' + \
+                  str(fg_omega_2b) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
             out_results.write(results)
