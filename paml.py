@@ -9,7 +9,8 @@ tests = {'branch': ['M0', 'b_free'],
          'bsA': ['bsA1', 'bsA'],
          'cmD': ['M3', 'bsD'],
          'cmC': ['XX', 'bsC']
-         } # NOTE XX refers to M2a_rel - this is just how to do a user-defined model
+         }  # NOTE XX refers to M2a_rel - this is just how to do a user-defined model
+
 
 # Check if running interactively in an iPython console, or in a script from the
 # command line
@@ -67,7 +68,7 @@ out_tree_name = os.path.splitext(out_tree_name)[0]
 out_tree_name = out_tree_name + '_' + gene_name + '.tre'
 
 # If there is a new alignment, prune the tree down to the taxa that remain in
-# the new alignment and write a new tree because EvolTree is shit and can't 
+# the new alignment and write a new tree because EvolTree is shit and can't
 # use the pruned tree saved in memory
 if empty_seq_count >= 1:
     if len(taxa_in_alignment) >= 1:
@@ -95,14 +96,13 @@ with open(test_taxa_file, 'r') as test_taxa_list:
 marked_taxon_ids = []
 # Mark test taxa
 for taxon in test_taxa:
-    taxon_node = tree&taxon # ete3 notation for finding a node within a tree
-    marked_taxon_id = taxon_node.node_id # mark_tree only takes node_ids, not 
-                                         # labels
+    taxon_node = tree & taxon  # ete3 notation for finding a node within a tree
+    marked_taxon_id = taxon_node.node_id  # mark_tree only takes node_ids, not labels
     tree.mark_tree([marked_taxon_id])
     marked_taxon_ids.append(marked_taxon_id)
 
 # Find internal nodes below the test taxa and mark them
-for i in range(len(test_taxa), 1,-1):
+for i in range(len(test_taxa), 1, -1):
     taxa_groups = [x for x in combinations(test_taxa, i)]
     for group in taxa_groups:
         common_node = tree.get_common_ancestor(*group)
@@ -110,11 +110,11 @@ for i in range(len(test_taxa), 1,-1):
         tree.mark_tree([marked_taxon_id])
         marked_taxon_ids.append(marked_taxon_id)
 
-best_model = {'M0': None, 'b_free': None, 'bsA1': None, 'bsA': None, 
+best_model = {'M0': None, 'b_free': None, 'bsA1': None, 'bsA': None,
               'M3': None, 'bsD': None, 'XX': None, 'bsC': None}
-best_lnL = {'M0': float('-inf'), 'b_free': float('-inf'), 
-            'bsA1': float('-inf'), 'bsA': float('-inf'), 'M3': float('-inf'), 
-            'bsD': float('-inf'), 'XX': float('-inf'), 
+best_lnL = {'M0': float('-inf'), 'b_free': float('-inf'),
+            'bsA1': float('-inf'), 'bsA': float('-inf'), 'M3': float('-inf'),
+            'bsD': float('-inf'), 'XX': float('-inf'),
             'bsC': float('-inf')}
 
 # Quicker version of running PAML for testing
@@ -138,7 +138,7 @@ best_lnL = {'M0': float('-inf'), 'b_free': float('-inf'),
 # Loop for running each version of each model in one test. Best models are
 # stored in a dictionary that is later read to write results
 for model in test:
-    for starting_branch_length_option in [1, -1]: 
+    for starting_branch_length_option in [1, -1]:
         if starting_branch_length_option == 1:
             branch_estimation = 'bl'
         elif starting_branch_length_option == -1:
@@ -156,13 +156,13 @@ for model in test:
                 tree.run_model(model_specifications, \
                             fix_blength=starting_branch_length_option, \
                             omega=initial_omega, NSsites=22, ncatG=3)
-                            
-                            
+                           
+                           
                 # Here's the garbage I wrote to make sure that it parses the out files correctly
                 tree.get_evol_model(model_specifications).properties['typ'] = 'branch-site'
                 tree.get_evol_model(model_specifications)._load(model_specifications+'/out')
-                
-                
+               
+               
             else:
                 tree.run_model(model_specifications, \
                             fix_blength=starting_branch_length_option, \
@@ -189,7 +189,7 @@ for model in test:
         one_branch = all_branch_stats[1]
         omega = one_branch.get('w')
         results = clade_name + ',' + gene_name + ',' + model_name + ',' + \
-                  str(lnL) + ',' + str(omega) + '\n' 
+                  str(lnL) + ',' + str(omega) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
             out_results.write(results)
@@ -206,7 +206,7 @@ for model in test:
                     bg_omega = bg_branch.get('w')
                     break
         results = clade_name + ',' + gene_name + ',' + model_name + ',' + \
-                  str(lnL) + ',' + str(bg_omega) + ',' + str(fg_omega) + '\n' 
+                  str(lnL) + ',' + str(bg_omega) + ',' + str(fg_omega) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
             out_results.write(results)
@@ -223,7 +223,7 @@ for model in test:
         results = clade_name + ',' + gene_name + ',' + model_name + ',' + \
                   str(lnL) + ',' + str(proportion_0) + ',' + str(omega_0) + \
                   ',' + str(proportion_1) + ',' + str(omega_1) + ',' + \
-                  str(proportion_2) + ',' + str(omega_2) + '\n' 
+                  str(proportion_2) + ',' + str(omega_2) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
             out_results.write(results)
@@ -246,11 +246,11 @@ for model in test:
                   ',' + str(fg_omega_0) + ',' + str(proportion_1) + ',' + \
                   str(bg_omega_1) + ',' + str(fg_omega_1) + ',' + \
                   str(proportion_2) + ',' + str(bg_omega_2) + ',' + \
-                  str(fg_omega_2) + '\n' 
+                  str(fg_omega_2) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
             out_results.write(results)
-    if model == 'XX': #If model is M2a_rel
+    if model == 'XX':  #If model is M2a_rel
         classes = current_model.classes
         proportions = classes.get('proportions')
         omegas = classes.get('w')
@@ -263,7 +263,7 @@ for model in test:
         results = clade_name + ',' + gene_name + ',' + model_name + ',' + \
                   str(lnL) + ',' + str(proportion_0) + ',' + str(omega_0) + \
                   ',' + str(proportion_1) + ',' + str(omega_1) + ',' + \
-                  str(proportion_2) + ',' + str(omega_2) + '\n' 
+                  str(proportion_2) + ',' + str(omega_2) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
             out_results.write(results)
@@ -286,7 +286,7 @@ for model in test:
                   ',' + str(fg_omega_0) + ',' + str(proportion_1) + ',' + \
                   str(bg_omega_1) + ',' + str(fg_omega_1) + ',' + \
                   str(proportion_2) + ',' + str(bg_omega_2) + ',' + \
-                  str(fg_omega_2) + '\n' 
+                  str(fg_omega_2) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
             out_results.write(results)
@@ -301,9 +301,10 @@ for model in test:
         proportion_1 = proportions[1]
         bg_omega_1 = background_omegas[1]
         fg_omega_1 = foreground_omegas[1]
-        proportion_2 = proportions[2]
+        proportion_2a = proportions[2]
         bg_omega_2a = background_omegas[2]
         fg_omega_2a = foreground_omegas[2]
+        proportion_2b = proportions[3]
         bg_omega_2b = background_omegas[3]
         fg_omega_2b = foreground_omegas[3]
 
@@ -311,8 +312,8 @@ for model in test:
                   str(lnL) + ',' + str(proportion_0) + ',' + str(bg_omega_0) +\
                   ',' + str(fg_omega_0) + ',' + str(proportion_1) + ',' + \
                   str(bg_omega_1) + ',' + str(fg_omega_1) + ',' + \
-                  str(proportion_2) + ',' + str(bg_omega_2a) + ',' + \
-                  str(fg_omega_2a) + str(bg_omega_2b) + ',' + \
+                  str(proportion_2a) + ',' + str(bg_omega_2a) + ',' + \
+                  str(fg_omega_2a) + str(proportion_2b) + str(bg_omega_2b) + ',' + \
                   str(fg_omega_2b) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
@@ -328,9 +329,10 @@ for model in test:
         proportion_1 = proportions[1]
         bg_omega_1 = background_omegas[1]
         fg_omega_1 = foreground_omegas[1]
-        proportion_2 = proportions[2]
+        proportion_2a = proportions[2]
         bg_omega_2a = background_omegas[2]
         fg_omega_2a = foreground_omegas[2]
+        proportion_2b = proportions[3]
         bg_omega_2b = background_omegas[3]
         fg_omega_2b = foreground_omegas[3]
 
@@ -338,8 +340,8 @@ for model in test:
                   str(lnL) + ',' + str(proportion_0) + ',' + str(bg_omega_0) +\
                   ',' + str(fg_omega_0) + ',' + str(proportion_1) + ',' + \
                   str(bg_omega_1) + ',' + str(fg_omega_1) + ',' + \
-                  str(proportion_2) + ',' + str(bg_omega_2a) + ',' + \
-                  str(fg_omega_2a) + str(bg_omega_2b) + ',' + \
+                  str(proportion_2a) + ',' + str(bg_omega_2a) + ',' + \
+                  str(fg_omega_2a) + + str(proportion_2b) + str(bg_omega_2b) + ',' + \
                   str(fg_omega_2b) + '\n'
         out_filename = clade_name + '_' + gene_name + '_' + model + '.csv'
         with open(out_filename, 'w') as out_results:
