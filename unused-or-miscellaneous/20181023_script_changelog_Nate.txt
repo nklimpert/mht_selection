@@ -1,0 +1,13 @@
+fixes to scripts
+
+in alignment_concatenator.py, on lines 45 & 62
+original:
+if(record.seq == gapSeq): 
+new:
+if (str(record.seq).upper().replace("N", "-")) == gapSeq:
+
+in make_relax_tree.py on lines 39 & 49
+same as above - also changed the script to have a variable called gapSeq to make it the same as alignment_concatenator.py
+
+in paml.py on lines 52 & 63,
+same change as in make_relax_tree.py
