@@ -148,10 +148,10 @@ for model in test:
                 initial_omega = 1.0
             model_specifications = model + '.' + branch_estimation + '_' + \
                                    str(initial_omega) + 'w'
-            print('Testing model ' + model + ' on ' + alignment_name + \
+            print(('Testing model ' + model + ' on ' + alignment_name + \
                   ' using starting branch length option ' + \
                   branch_estimation + ' and initial omega: ' + \
-                  str(initial_omega) + 'w')
+                  str(initial_omega) + 'w'))
             if model == 'XX':
                 tree.run_model(model_specifications, \
                             fix_blength=starting_branch_length_option, \
@@ -168,11 +168,11 @@ for model in test:
                             fix_blength=starting_branch_length_option, \
                             omega=initial_omega)
             current_model = tree.get_evol_model(model_specifications)
-            print('The fitting of model ' + model + ' on ' + alignment_name + \
+            print(('The fitting of model ' + model + ' on ' + alignment_name + \
                   ' using starting branch length option ' + \
                   branch_estimation + ' and initial omega: ' + \
                   str(initial_omega) + 'w, the likelihood was: ' + \
-                  str(current_model.lnL))
+                  str(current_model.lnL)))
             if current_model.lnL > best_lnL[model]:
                 best_lnL[model] = current_model.lnL
                 best_model[model] = current_model

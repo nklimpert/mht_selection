@@ -3,7 +3,7 @@ import os
 
 missing = {}
 
-for alignment in filter(lambda s: s.endswith(".fasta"), os.listdir(os.getcwd())):
+for alignment in [s for s in os.listdir(os.getcwd()) if s.endswith(".fasta")]:
     gene = alignment.split("_")[0]
 
     # loop through all of the records

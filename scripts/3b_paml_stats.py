@@ -104,44 +104,44 @@ class PamlResults:
         # next, make a dictionary of the likelihood ratio tests
 
         self.LRTs = {}
-        for testName, modelPair in self.tests.items():
+        for testName, modelPair in list(self.tests.items()):
             self.LRTs[testName] = self.likelihood_ratio(modelPair[0].lnL, modelPair[1].lnL)
 
         # next, make a dictionary of the p-values
 
         self.p_values = {}
-        for testName, likelihood in self.LRTs.items():
+        for testName, likelihood in list(self.LRTs.items()):
             self.p_values[testName] = self.chi_dist(likelihood)
 
         # initialize all of the fdr values to -1
         self.fdr_values = {}
-        for testName in self.tests.keys():
+        for testName in list(self.tests.keys()):
             self.fdr_values[testName] = -1
 
         self.significance = {}
-        for testName in self.tests.keys():
+        for testName in list(self.tests.keys()):
             self.significance[testName] = None
 
     def __str__(self):
         values = [self.clade, self.gene]
-        for testName in self.tests.keys():
+        for testName in list(self.tests.keys()):
             values.extend([self.LRTs[testName], self.p_values[testName], self.fdr_values[testName],
                            self.significance[testName]])
-        return ','.join(map(lambda x: str(x), values))
+        return ','.join([str(x) for x in values])
 
     def __repr__(self):
         values = [self.clade, self.gene]
-        for testName in self.tests.keys():
+        for testName in list(self.tests.keys()):
             values.extend([self.LRTs[testName], self.p_values[testName], self.fdr_values[testName],
                            self.significance[testName]])
-        return ','.join(map(lambda x: str(x), values))
+        return ','.join([str(x) for x in values])
 
 
 def fdr_correction(results):
     ''' does false discovery rate correction with Benjamin-Hochberg procedure on a list of PamlResults
         returns a dictionary where the name is the key and the value is a boolean
         (True if significant)'''
-    for testName in results[0].tests.keys():
+    for testName in list(results[0].tests.keys()):
         sorted_results = sorted(results, key=lambda x: x.p_values[testName])
         for i in range(len(sorted_results)):
             fdr_p = 0.05*(float(i+1)/len(sorted_results))
@@ -155,7 +155,7 @@ def file_reader(resultsFile):
     with open(resultsFile, 'r') as csvfile:
         for line in csvfile:
             # get rid of all of the empty cells
-            row = [x for x in filter(lambda x: x != '', line.rstrip().split(','))]
+            row = [x for x in [x for x in line.rstrip().split(',') if x != '']]
             if 'gene' not in row:  # make it skip the first row only if it's a title row
                 all_results.append(TestResults(*row))
     return all_results
@@ -169,21 +169,21 @@ def main():
 
     cladeDict = {}
     for result in all_results:
-        if result.clade not in cladeDict.keys():
+        if result.clade not in list(cladeDict.keys()):
             cladeDict[result.clade] = {result.gene: {}}
-        if result.gene not in cladeDict[result.clade].keys():
+        if result.gene not in list(cladeDict[result.clade].keys()):
             cladeDict[result.clade][result.gene] = {}
-        if result.test not in cladeDict[result.clade][result.gene].keys():
+        if result.test not in list(cladeDict[result.clade][result.gene].keys()):
             cladeDict[result.clade][result.gene][result.test] = []
         cladeDict[result.clade][result.gene][result.test].append(result)
 
     all_PamlResults = {}
 
-    for clade in cladeDict.keys():
+    for clade in list(cladeDict.keys()):
         all_PamlResults[clade] = []
-        for gene in cladeDict[clade].keys():
+        for gene in list(cladeDict[clade].keys()):
             #TODO make it so that it puts all of the tests together
-            listOfTests = [v for v in cladeDict[clade][gene].values()]
+            listOfTests = [v for v in list(cladeDict[clade][gene].values())]
 
             pResult = PamlResults(clade, gene, *listOfTests)
             all_PamlResults[clade].append(pResult)
@@ -192,11 +192,11 @@ def main():
     with open(os.path.splitext(resultsFile)[0]+'_corrected.csv', 'w+') as outFile:
         header = "clade,gene"
         # look at the first result
-        for testName in list(all_PamlResults.values())[0][0].tests.keys():
+        for testName in list(list(all_PamlResults.values())[0][0].tests.keys()):
             header += ",{0} LRT, {0} p-value, {0} FDR, {0} significant?".format(testName)
         header += "\n"
         outFile.write(header)
-        for genes in all_PamlResults.values():
+        for genes in list(all_PamlResults.values()):
             for gene in genes:
                 outFile.write(str(gene)+'\n')
 

@@ -27,16 +27,16 @@ alignment_format = alignment_format[1:]  # Remove '.' character from filetype
 record = next(SeqIO.parse(alignment_file, format=alignment_format))
 seq_len = len(record.seq)
 if seq_len % 3 != 0:
-    print alignment_file + ' is out of frame.'
+    print(alignment_file + ' is out of frame.')
 else:
     for record in SeqIO.parse(alignment_file, format=alignment_format):
         try:
             aa_record = record.translate(gap='-')
             if '*' in aa_record.seq:
-                print alignment_file + ' contains stop codons.'
+                print(alignment_file + ' contains stop codons.')
         except CodonTable.TranslationError:
             pass
-            print alignment_file + ' has a Translation Error.'
+            print(alignment_file + ' has a Translation Error.')
 
 
 #record_nogaps = record.seq.ungap('-')

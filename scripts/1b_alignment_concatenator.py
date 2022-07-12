@@ -24,7 +24,7 @@ def check_gene_group(geneName, geneDict='plastid'):
                              'mttB', 'nad1', 'nad2', 'nad3', 'nad4L', 'nad4', 'nad5', 'nad6', 'nad7', 'nad9', 'rpl16', 'rpl2', 'rpl5', 'rps12',
                               'rps19', 'rps1', 'rps3', 'rps4', 'rps7', 'sdh4', ]}
     geneGroups = []
-    for group, genes in geneDict.items():
+    for group, genes in list(geneDict.items()):
         if geneName in genes:
             geneGroups.append(group)
     return geneGroups
@@ -121,14 +121,14 @@ def main():
     for file in alignmentFiles:
         groupNames = check_gene_group(get_gene_name(file), geneDict=geneType)
         for groupName in groupNames:
-            if(groupName not in geneGroups.keys()):
+            if(groupName not in list(geneGroups.keys())):
                 geneGroups[groupName] = [file]
             else:
                 geneGroups[groupName].append(file)
     
-    make_directories(geneGroups.keys())  # makes all of the directories needed
+    make_directories(list(geneGroups.keys()))  # makes all of the directories needed
     
-    for group, files in geneGroups.items():
+    for group, files in list(geneGroups.items()):
         outFileName = group + '_' + '_'.join(files[0].split('_')[1:]) # makes the out file name based on the first file
         outFileName = os.path.join(group, outFileName)
         concatenatedAlignment = concat(files)

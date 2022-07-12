@@ -16,4 +16,4 @@ with open(file2, 'r') as inFile:
 
 diff = file1_set - file2_set
 
-print('\n'.join(diff))
+print(('\n'.join(diff)))
