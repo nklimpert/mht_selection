@@ -11,7 +11,7 @@ def check_gene_group(geneName, geneDict='plastid'):
        if no gene dictionary is given, it will use a preset dictionary.'''
     if geneDict == 'plastid':
         geneDict = {'accD': ['accD'], 'atp': ['atpA', 'atpB', 'atpE', 'atpF', 'atpH', 'atpI'],
-                    'ccsA': ['ccsA'], 'cemA': ['cemA'], 'clpP': ['clpP'], 'infA': ['infA'], 'matK': ['matK'], 'misc': ['accD', 'matK', 'clpP'],
+                    'ccsA': ['ccsA'], 'cemA': ['cemA'], 'clpP': ['clpP'], 'infA': ['infA'], 'matK': ['matK'],
                     'ndh': ['ndhA', 'ndhB', 'ndhC', 'ndhD', 'ndhE', 'ndhF', 'ndhG', 'ndhH', 'ndhI', 'ndhJ', 'ndhK'],
                     'pet': ['petA', 'petB', 'petD', 'petG', 'petL', 'petN'], 'psa': ['psaA', 'psaB', 'psaC', 'psaI', 'psaJ', 'psbA'],
                     'psb': ['psbB', 'psbC', 'psbD', 'psbE', 'psbF', 'psbH', 'psbI', 'psbJ', 'psbK', 'psbL', 'psbM', 'psbN', 'psbT', 'lhbA'],
@@ -104,7 +104,7 @@ def concat(alignmentFiles):
 
 def make_directories(dirList=[]):
     if dirList == []:
-        dirList = ['accD', 'atp', 'ccsA', 'cemA', 'clpP', 'infA', 'matK', 'misc', 'ndh', 'pet', 'psa', 'psb', 'rbcL',  'rpl', 'rpo', 'rps', 'ycf3', 'ycf4']
+        dirList = ['accD', 'atp', 'ccsA', 'cemA', 'clpP', 'infA', 'matK', 'ndh', 'pet', 'psa', 'psb', 'rbcL',  'rpl', 'rpo', 'rps', 'ycf3', 'ycf4']
     for name in dirList:
         if not os.path.isdir(name):
             os.mkdir(name)
